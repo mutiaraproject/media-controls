@@ -29,6 +29,7 @@ import {
     PlaybackStatus,
     WidgetFlags,
 } from "../../types/enums/common.js";
+import * as CustomPanelButton from "./CustomPanelButton.js";
 
 Gio._promisify(GdkPixbuf.Pixbuf, "new_from_stream_async", "new_from_stream_finish");
 Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");
@@ -732,52 +733,22 @@ class PanelButton extends PanelMenu.Button {
             this.menuControls.insert_child_at_index(icon, options.menuProps.index);
         }
     }
-
-    /**
-     * @private
-     * @param {number} index
-     * @returns {void}
-     */
-    addButtonIcon(index) {
-        const app = getAppByIdAndEntry(this.playerProxy.identity, this.playerProxy.desktopEntry);
-        const appIcon = app?.get_icon() ?? Gio.Icon.new_for_string("audio-x-generic-symbolic");
-        const coloredClass = this.extension.coloredPlayerIcon ? "colored-icon" : "symbolic-icon";
-        const icon = new St.Icon({
-            gicon: appIcon,
-            styleClass: `system-status-icon no-margin ${coloredClass}`,
-        });
-        if (this.buttonIcon?.get_parent() === this.buttonBox) {
-            this.buttonBox.replace_child(this.buttonIcon, icon);
-        } else {
-            this.buttonBox.insert_child_at_index(icon, index);
-            debugLog("Added icon");
-        }
-        this.buttonIcon = icon;
-    }
-
-    /**
-     * @private
-     * @param {number} index
-     * @returns {void}
-     */
-    addButtonLabel(index) {
-        const label = new ScrollingLabel({
-            text: this.getButtonLabelText(),
-            width: this.extension.labelWidth,
-            isFixedWidth: this.extension.isFixedLabelWidth,
-            isScrolling: this.extension.scrollLabels,
-            initPaused: this.playerProxy.playbackStatus !== PlaybackStatus.PLAYING,
-            scrollSpeed: this.extension.scrollSpeed,
-        });
-        if (this.buttonLabel?.get_parent() === this.buttonBox) {
-            this.buttonBox.replace_child(this.buttonLabel, label);
-        } else {
-            this.buttonBox.insert_child_at_index(label, index);
-            debugLog("Added label");
-        }
-        this.buttonLabel = label;
-    }
-
+/**
+ * @private
+ * @param {number} index
+ * @returns {void}
+ */
+addButtonIcon(index) {
+    CustomPanelButton.customAddButtonIcon(this, index);
+}
+/**
+ * @private
+ * @param {number} index
+ * @returns {void}
+ */
+addButtonLabel(index) {
+    CustomPanelButton.customAddButtonLabel(this, index);
+}
     /**
      * @private
      * @param {number} index
@@ -968,12 +939,12 @@ class PanelButton extends PanelMenu.Button {
      * @private
      * @returns {void}
      */
-    addProxyListeners() {
-        this.addProxyListener("Metadata", () => {
-            this.updateWidgets(
-                WidgetFlags.PANEL_LABEL | WidgetFlags.MENU_IMAGE | WidgetFlags.MENU_LABELS | WidgetFlags.MENU_SLIDER,
-            );
-        });
+     addProxyListeners() {
+this.addProxyListener("Metadata", () => {
+    this.updateWidgets(
+        WidgetFlags.PANEL_ICON | WidgetFlags.PANEL_LABEL | WidgetFlags.MENU_IMAGE | WidgetFlags.MENU_LABELS | WidgetFlags.MENU_SLIDER,
+    );
+});
         this.addProxyListener("PlaybackStatus", () => {
             this.updateWidgets(WidgetFlags.PANEL_CONTROLS_PLAYPAUSE | WidgetFlags.MENU_CONTROLS_PLAYPAUSE);
             if (this.playerProxy.playbackStatus !== PlaybackStatus.PLAYING) {
