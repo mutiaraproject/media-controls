@@ -1,5 +1,5 @@
 Name:           mutiara-media-controls
-Version:        1.0.0
+Version:        1.0.2
 Release:        1%{?dist}
 Summary:        Mutiara Media Controls GNOME extension
 
