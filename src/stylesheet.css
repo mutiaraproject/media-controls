@@ -1,30 +1,26 @@
 .colored-icon {
     -st-icon-style: requested;
 }
-
 .symbolic-icon {
     -st-icon-style: symbolic;
 }
-
 .no-margin {
     margin: 0;
 }
-
 .no-padding {
     padding: 0;
 }
-
 .panel-button {
     padding-left: 6px;
     padding-right: 6px;
 }
 
-.panel-button-box > * {
+/* FIXED: Don't apply padding to album art icon */
+.panel-button-box > *:not(.panel-button-icon) {
     padding-left: 6px;
     padding-right: 6px;
 }
-
-.panel-button-box > *:last-child:not(.controls-box) {
+.panel-button-box > *:last-child:not(.controls-box):not(.panel-button-icon) {
     padding-left: 6px;
     padding-right: 6px;
 }
@@ -33,68 +29,108 @@
     padding-left: 0px;
     padding-right: 0px;
 }
-
 .panel-controls-box > * {
     padding-left: 6px;
     padding-right: 6px;
 }
-
 .popup-menu-container {
     padding: 12px;
 }
-
 .popup-menu-box {
     border-width: 0px;
 }
-
 .popup-menu-box > * {
     margin-top: 6px;
     margin-bottom: 6px;
 }
-
 .popup-menu-player-icons {
     margin-top: 6px;
     border-radius: 6px;
 }
-
 .popup-menu-player-icons-icon {
     padding: 6px;
     background-color: rgba(0, 0, 0, 0.125);
     transition-property: background-color;
     transition-duration: 200ms;
 }
-
 .popup-menu-player-icons-icon-last {
     border-radius: 0px 6px 6px 0px;
 }
-
 .popup-menu-player-icons-icon-first {
     border-radius: 6px 0px 0px 6px;
 }
-
 .popup-menu-player-icons-icon:hover {
     background-color: rgba(160, 160, 160, 0.25);
 }
-
 .popup-menu-player-icons-icon-active {
     background-color: rgba(160, 160, 160, 0.25);
 }
-
 .popup-menu-player-label {
     font-size: small;
     margin-right: 6px;
     margin-left: 6px;
 }
-
 .popup-menu-label-title {
     font-size: large;
 }
-
 .popup-menu-control-icon {
     padding: 6px;
     border-radius: 99px;
 }
-
 .popup-menu-control-icon:hover {
     background-color: rgba(160, 160, 160, 0.25);
+}
+
+/* Container for the panel label */
+.panel-label-container {
+    spacing: 0px;
+}
+
+/* Title styling */
+.panel-label-title {
+    color: --album-art-color;
+    font-size: 10pt;
+}
+
+/* Artist styling */
+.panel-label-artist {
+    color: #aaaaaa;
+    font-size: 9.5pt;
+}
+
+/* Album styling */
+.panel-label-album {
+    color: #888888;
+    font-weight: normal;
+}
+
+/* Disc number styling */
+.panel-label-disc {
+    color: #666666;
+}
+
+/* Track number styling */
+.panel-label-track {
+    color: #666666;
+}
+
+/* Separator/custom text styling */
+.panel-label-separator {
+    color: #888888;
+}
+
+/* Overall scrolling label (when scrolling is enabled) */
+.panel-label-text {
+    color: #ffffff;
+}
+
+/* Album art icon - Size is controlled in code (default 20px) */
+.panel-button-icon {
+    margin: 0px 10px 0 0 !important;
+    padding: 0px !important;
+    /* Optional: Add a subtle border or shadow */
+    border: 1px solid --album-art-color;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
