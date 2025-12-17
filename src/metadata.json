@@ -1,7 +1,7 @@
 {
   "description": "Show controls and information of the currently playing media in the panel, now made slightly better (and jankier)!",
   "gettext-domain": "mediacontrols@mutiaraproject.github.com",
-  "name": "Media Controls",
+  "name": "Mutiara Media Controls",
   "settings-schema": "org.gnome.shell.extensions.mediacontrols",
   "shell-version": [
     "46",
